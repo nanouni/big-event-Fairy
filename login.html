@@ -46,7 +46,7 @@
         <!-- 标题区域 -->
         <div class="title"></div>
         <!-- 表单区域 -->
-        <form class="layui-form" action="">
+        <form class="layui-form" id="reg">
             <!-- 用户名 -->
             <div class="layui-form-item ">
                 <i class="layui-icon layui-icon-username"></i>
@@ -62,12 +62,12 @@
             <!-- 再次登录密码 -->
             <div class="layui-form-item">
                 <i class="layui-icon layui-icon-password"></i>
-                <input type="password" name="password" required lay-verify="required|pass|repsw" placeholder="请再次输入密码"
+                <input type="password" name="repassword" required lay-verify="required|pass|repsw" placeholder="请再次输入密码"
                     autocomplete="off" class="layui-input">
             </div>
             <!-- 登录按钮 -->
             <div class="layui-form-item">
-                <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit lay-filter="formDemo">登 录</button>
+                <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit lay-filter="formDemo">注册</button>
             </div>
             <a href="javascript:;" id="goLogin">去登录</a>
         </form>

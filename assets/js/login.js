@@ -15,6 +15,8 @@ $(function () {
 
 // 表单验证功能
 let form = layui.form
+let layer = layui.layer
+
 form.verify({
 
     //我们既支持上述函数式的方式，也支持下述数组的形式
@@ -31,4 +33,27 @@ form.verify({
         }
     }
 
-});      
+});
+
+// 发送注册请求
+$('#reg').on('submit', function (e) {
+    e.preventDefault();
+
+    // 获取表单中的数据
+    let data = $(this).serialize()
+
+    // 发起注册请求
+    $.ajax({
+        url: 'http://ajax.frontend.itheima.net/api/reguser',
+        type: 'POST',
+        data,
+        success: function (res) {
+            if (res.status !== 0) {
+                layer.msg('注册失败' + res.message);
+                return
+            }
+            layer.msg('注册成功');
+            $('#goLogin').click()
+        }
+    })
+})
