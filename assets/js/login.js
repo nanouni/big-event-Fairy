@@ -44,7 +44,7 @@ $('#reg').on('submit', function (e) {
 
     // 发起注册请求
     $.ajax({
-        url: 'http://ajax.frontend.itheima.net/api/reguser',
+        url: '/api/reguser',
         type: 'POST',
         data,
         success: function (res) {
@@ -57,3 +57,30 @@ $('#reg').on('submit', function (e) {
         }
     })
 })
+
+// 发送登陆请求
+$('#login').on('submit', function (e) {
+    e.preventDefault()
+
+    // 获取表单中的数据
+    let data = $(this).serialize()
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/login',
+        data,
+        success: function (res) {
+            if (res.status !== 0) {
+                layer.msg('登录失败' + res.message);
+                return
+            }
+            layer.msg('登录成功');
+            // 登陆成功，保存token地址
+            localStorage.setItem('token', res.token)
+            // 跳转到index.html
+            location.href = 'index.html'
+
+        }
+    })
+})
+
