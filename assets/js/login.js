@@ -72,11 +72,15 @@ $(function () {
                     layer.msg('登录失败' + res.message);
                     return
                 }
-                layer.msg('登录成功');
+                layer.msg('登录成功，即将进入后台主页', {
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function () {
+
+                    // 跳转到index.html
+                    location.href = 'index.html'
+                });
                 // 登陆成功，保存token地址
                 localStorage.setItem('token', res.token)
-                // 跳转到index.html
-                location.href = 'index.html'
 
             }
         })
