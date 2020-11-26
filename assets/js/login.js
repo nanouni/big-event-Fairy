@@ -69,7 +69,7 @@ $(function () {
             data,
             success: function (res) {
                 if (res.status !== 0) {
-                    layer.msg('登录失败' + res.message);
+                    layer.msg('登录失败！请重新确认密码或账户信息！');
                     return
                 }
                 layer.msg('登录成功，即将进入后台主页', {

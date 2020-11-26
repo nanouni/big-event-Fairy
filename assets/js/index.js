@@ -1,7 +1,27 @@
 $(function () {
-    let data = $(this).serialize()
+
     let layer = layui.layer
     // 获取用户信息
+    getAvatarAndName()
+
+    // 退出功能
+    $('#outBtn').click(function () {
+        layer.confirm(
+            '确认退出么?',
+            { icon: 3, title: '提示' },
+            function (index) {
+                // 1.把存在本地的token清除掉
+                // 2.页面跳转login.html页面
+                localStorage.removeItem('token')
+                location.href = 'login.html'
+                layer.close(index);
+            });
+    })
+})
+
+// 全局的获取用户信息
+function getAvatarAndName() {
+    let data = $(this).serialize()
     $.ajax({
         type: 'GET',
         url: '/my/userinfo',
@@ -10,7 +30,7 @@ $(function () {
         // },
         data,
         success: function (res) {
-            console.log(res);
+            // console.log(res);
             if (res.status !== 0) {
                 return layer.msg('获取用户信息失败')
             }
@@ -45,18 +65,4 @@ $(function () {
         // }
 
     })
-
-    // 退出功能
-    $('#outBtn').click(function () {
-        layer.confirm(
-            '确认退出么?',
-            { icon: 3, title: '提示' },
-            function (index) {
-                // 1.把存在本地的token清除掉
-                // 2.页面跳转login.html页面
-                localStorage.removeItem('token')
-                location.href = 'login.html'
-                layer.close(index);
-            });
-    })
-})
+}
