@@ -1,5 +1,6 @@
 $(function () {
-    let layer = layui.layer
+
+    // 自己优化需求：裁剪区域的图片在上传图片更新之后也进行同步更新
 
     // 1.1 获取裁剪区域的 DOM 元素
     let $image = $('#image')
@@ -11,6 +12,29 @@ $(function () {
         // 指定预览区域
         preview: '.img-preview'
     }
+    // 1.3 创建裁剪区域
+    $image.cropper(options)
+
+    $.ajax({
+        type: 'GET',
+        url: '/my/userinfo',
+        success: function (res) {
+            console.log(res);
+
+            $image
+                .cropper('destroy')  // 销毁旧的裁剪区域
+                .attr('src', res.data.user_pic)  // 重新设置图片路径
+                .cropper(options)  // 重新初始化裁剪区域
+        }
+    })
+
+
+    let layer = layui.layer
+
+    // 给图片裁剪区域添加img标签  
+    // $('.cropper-box').prepend(`<img id="image" src="/assets/images/sample.jpg" />`)
+
+
 
     // 1.3 创建裁剪区域
     $image.cropper(options)
@@ -38,6 +62,7 @@ $(function () {
             .attr('src', newImageURL)  // 重新设置图片路径
             .cropper(options)  // 重新初始化裁剪区域
     })
+
 
     // 上传头像 实现剪切后的图片
     $('#sureBtn').click(function () {
@@ -67,8 +92,32 @@ $(function () {
                 }
                 layer.msg('更换头像成功')
                 window.parent.getAvatarAndName('index.html')
+            },
+            complete: function () {
+                onloadImage()
             }
+
         })
+
     })
+
+    // 完成之后想使上传图片替换成原路径的图片
+
+    // function onloadImage() {
+
+    //     let file = this.files[0]
+    //     // console.dir(this);
+    //     // console.log(file);
+
+    //     let newReader = new FileReader()  // 新建方法对象
+    //     newReader.readAsDataURL(file);// 以DataURL的形式读取文件
+    //     newReader.onload = function (e) {
+    //         var data = e.target.result; // 将base64编码转换为url地址          
+    //         $image.val(data);//赋值
+    //     };
+
+    //     $image.attr('src', newReader)
+    // }
+
 
 })
